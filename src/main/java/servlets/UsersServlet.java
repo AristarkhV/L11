@@ -30,8 +30,8 @@ public class UsersServlet extends HttpServlet {
             return;
         }
 
-        UserProfile userProfile = accountService.getUserByLogin(login);
-        if (userProfile == null || !userProfile.getPassword().equals(password)) {
+        Optional<UserProfile> userProfile = Optional.ofNullable(accountService.getUserByLogin(login));
+        if (!userProfile.isPresent() || !userProfile.get().getPassword().equals(password)) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().println("Unauthorized");
@@ -49,8 +49,9 @@ public class UsersServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        UserProfile userProfile = accountService.getUserByLogin(login);
-        if (userProfile != null) {
+        //UserProfile userProfile = accountService.getUserByLogin(login);
+        Optional<UserProfile> userProfile = Optional.ofNullable(accountService.getUserByLogin(login));
+        if (userProfile.isPresent()) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.getWriter().println("The login is already taken, please choose another one");
