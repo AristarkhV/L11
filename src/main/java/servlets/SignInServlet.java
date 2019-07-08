@@ -16,7 +16,8 @@ public class SignInServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+        throws ServletException, IOException {
         if (accountService.getUserByLogin(req.getParameter("login")) == null) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().println("Unauthorized");
