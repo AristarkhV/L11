@@ -24,7 +24,7 @@ public class UsersServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        if (login == null || password == null) {
+        if (login.isEmty() || password.isEmpty()) {
             response.setContentType("text/html;charset=utf-8");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
@@ -49,7 +49,6 @@ public class UsersServlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        //UserProfile userProfile = accountService.getUserByLogin(login);
         Optional<UserProfile> userProfile = Optional.ofNullable(accountService.getUserByLogin(login));
         if (userProfile.isPresent()) {
             response.setContentType("text/html;charset=utf-8");
